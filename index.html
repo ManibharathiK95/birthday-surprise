@@ -1,170 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Special Birthday Surprise 🎂</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #ffdee9, #b5fffc);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Special Birthday Surprise 🎂</title>
 
-    .card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      max-width: 95%;
-      width: 400px;
-      animation: pop 0.6s ease;
-    }
-
-    .question {
-      font-size: 20px;
-      margin: 15px 0;
-    }
-
-    button {
-      font-size: 18px;
-      padding: 10px 20px;
-      margin: 8px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: transform 0.2s;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    button:hover { transform: scale(1.05); }
-    .yes { background: #4caf50; color: white; }
-    .no { background: #ff5252; color: white; }
-
-    .final-message { font-size: 20px; font-color: "violet"; }
-    .cartoon { font-size: 40px; margin-bottom: 10px; }
-    .confetti {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      bottom: -20px;
-      left: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      animation: confetti-blast ease-out forwards;
-    }
-
-    .final-message {
-      position: relative;
-      padding: 20px;
-      border-radius: 15px;
-      color: #4a004a;
-      overflow: hidden;
-    }
-
-    .final-message::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: url('https://photos.app.goo.gl/ugPqn3ZkBiPU516u5');
-      background-size: cover;
-      background-position: center;
-      opacity: 0.8; /* 80% transparency */
-      z-index: -1;
-    }
-
-  </style>
-</head>
-<body>
-  <div class="card">
-    <div class="cartoon">🎉🎈🎂</div>
-    <div id="content"></div>
-  </div>
-
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-
-    const introQuestion = "வணக்கம் திருமதி உதயராணி 👑💖<br>உங்கள் பிறந்தநாள் பரிசைப் பெற வருக 🎂🎉<br><br>Are you ready? 😄";
-    const questions = [
-      introQuestion,
-      "நீங்க தான் உங்க குடும்பத்திற்கு ராணி என்று தெரியுமா?👑😂",
-      "நந்து உங்களுக்குப் பிடித்த நபரா? 🤭💖",
-      "இந்த உலகத்திலேயே உங்க மகனுக்கு உங்களதான் ரொம்ப புடிக்கும்னு உங்களுக்கு தெரியுமா?? 😜",
-      "உங்க மகன் எப்போ கேட்டாலும் நீங்க பாயாசம் செஞ்சு தருவீங்களா? 🍮😆",
-      "இப்பொழுது அளவற்ற அன்பை பெற நீங்கள் தயாரா? 🤗💕"
-    ];
-
-    let currentQuestion = 0;
-    const content = document.getElementById("content");
-
-    function loadQuestion() {
-      const text = questions[currentQuestion];
-      content.innerHTML = `<div class="question">${text}</div><button class='yes'>Yes</button><button class='no'>No</button>`;
-
-      const yesBtn = content.querySelector('.yes');
-      const noBtn = content.querySelector('.no');
-
-      yesBtn.addEventListener('click', answerYes);
-      yesBtn.addEventListener('touchstart', answerYes);
-      noBtn.addEventListener('click', answerNo);
-      noBtn.addEventListener('touchstart', answerNo);
-    }
-
-    function answerYes() {
-      currentQuestion++;
-      if(currentQuestion < questions.length) loadQuestion();
-      else showFinalMessage();
-    }
-
-    function answerNo() {
-      loadQuestion();
-    }
-
-    function showFinalMessage() {
-      content.innerHTML = `<div class="final-message">🎉🎂 My Dear Mummy!! 🎂🎉<br><br>
-      Vaalththa Vayathillai, Vanangugiren 😆👑<br><br>
-      Thank you for your love, thittugal, food, advice, and ooma kuththugal 💖<br>
-      You are not just my mom… you are my first and forever best friend 🥰<br><br>
-      Yenna aanalum naan iruppen — thoorama irundhaalum kitaye iruppen 💕🌸<br><br>
-      Yours lovingly,<br>Nandhu 💖<br><br>Love you my ammovvv 💕</div>`;
-      startConfetti();
-    }
-
-    function startConfetti() {
-  const colors = ['#ff4d6d','#ffd166','#06d6a0','#118ab2','#9b5de5'];
-
-  for (let i = 0; i < 150; i++) {
-    const confetti = document.createElement('div');
-    confetti.className = 'confetti';
-
-    const angle = Math.random() * Math.PI - Math.PI / 2; // spread
-    const distance = 100 + Math.random() * 300;
-
-    confetti.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
-    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
-
-    document.body.appendChild(confetti);
-    setTimeout(() => confetti.remove(), 4000);
-  }
+<style>
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ffdee9, #b5fffc);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  overflow-x: hidden;
 }
 
-    loadQuestion();
-  });
-  </script>
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  max-width: 95%;
+  width: 400px;
+}
+
+.cartoon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.question {
+  font-size: 20px;
+  margin: 15px 0;
+}
+
+button {
+  font-size: 18px;
+  padding: 10px 20px;
+  margin: 8px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:hover { transform: scale(1.05); }
+
+.yes { background: #4caf50; color: white; }
+.no  { background: #ff5252; color: white; }
+
+/* FINAL MESSAGE WITH BACKGROUND */
+.final-message {
+  position: relative;
+  padding: 22px;
+  border-radius: 15px;
+  color: #4a004a;
+  font-size: 20px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.final-message::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('https://photos.app.goo.gl/ugPqn3ZkBiPU516u5');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+  z-index: -2;
+}
+
+/* soft white overlay for readability */
+.final-message::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.6);
+  z-index: -1;
+}
+
+/* CONFETTI */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  bottom: -20px;
+  left: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  animation: confetti-blast ease-out forwards;
+}
+
+@keyframes confetti-blast {
+  0% {
+    transform: translate(0,0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) rotate(720deg);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="card">
+  <div class="cartoon">🎉🎈🎂</div>
+  <div id="content"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  const introQuestion =
+    "வணக்கம் திருமதி உதயராணி 👑💖<br>உங்கள் பிறந்தநாள் பரிசைப் பெற வருக 🎂🎉<br><br>Are you ready? 😄";
+
+  const questions = [
+    introQuestion,
+    "நீங்க தான் உங்க குடும்பத்திற்கு ராணி என்று தெரியுமா?👑😂",
+    "நந்து உங்களுக்குப் பிடித்த நபரா? 🤭💖",
+    "இந்த உலகத்திலேயே உங்க மகனுக்கு உங்களதான் ரொம்ப புடிக்கும்னு உங்களுக்கு தெரியுமா?? 😜",
+    "உங்க மகன் எப்போ கேட்டாலும் நீங்க பாயாசம் செஞ்சு தருவீங்களா? 🍮😆",
+    "இப்பொழுது அளவற்ற அன்பை பெற நீங்கள் தயாரா? 🤗💕"
+  ];
+
+  let currentQuestion = 0;
+  const content = document.getElementById("content");
+
+  function loadQuestion() {
+    content.innerHTML = `
+      <div class="question">${questions[currentQuestion]}</div>
+      <button class="yes">Yes</button>
+      <button class="no">No</button>
+    `;
+
+    content.querySelector('.yes').onclick = answerYes;
+    content.querySelector('.no').onclick = loadQuestion;
+  }
+
+  function answerYes() {
+    currentQuestion++;
+    if (currentQuestion < questions.length) loadQuestion();
+    else showFinalMessage();
+  }
+
+  function showFinalMessage() {
+    content.innerHTML = `
+      <div class="final-message">
+        🎉🎂 My Dear Mummy!! 🎂🎉<br><br>
+        Vaalththa Vayathillai, Vanangugiren 😆👑<br><br>
+        Thank you for your love, thittugal, food, advice, and ooma kuththugal 💖<br>
+        You are not just my mom… you are my first and forever best friend 🥰<br><br>
+        Yenna aanalum naan iruppen — thoorama irundhaalum kitaye iruppen 💕🌸<br><br>
+        Yours lovingly,<br>
+        Nandhu 💖<br><br>
+        Love you my ammovvv 💕
+      </div>
+    `;
+    startConfetti();
+  }
+
+  function startConfetti() {
+    const colors = ['#ff4d6d','#ffd166','#06d6a0','#118ab2','#9b5de5'];
+
+    for (let i = 0; i < 150; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+      const angle = Math.random() * Math.PI - Math.PI / 2;
+      const distance = 150 + Math.random() * 300;
+
+      c.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+      c.style.setProperty('--y', `${-Math.sin(angle) * distance - 200}px`);
+      c.style.animationDuration = (2 + Math.random() * 2) + 's';
+
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 4500);
+    }
+  }
+
+  loadQuestion();
+});
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
