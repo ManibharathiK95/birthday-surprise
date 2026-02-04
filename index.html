@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Special Birthday Surprise 🎂</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffdee9, #b5fffc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      max-width: 95%;
+      width: 400px;
+      animation: pop 0.6s ease;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .question {
+      font-size: 20px;
+      margin: 15px 0;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 10px 20px;
+      margin: 8px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:hover { transform: scale(1.05); }
+    .yes { background: #4caf50; color: white; }
+    .no { background: #ff5252; color: white; }
+
+    .final-message { font-size: 20px; color: #ff4d6d; }
+    .cartoon { font-size: 40px; margin-bottom: 10px; }
+    .confetti { position: fixed; width: 10px; height: 10px; top: -10px; animation: fall linear forwards; z-index: 9999; }
+    @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="cartoon">🎉🎈🎂</div>
+    <div id="content"></div>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+
+    const introQuestion = "Hello Mrs. Udayarani 👑💖<br>Welcome to your birthday surprise 🎂🎉<br><br>Are you ready? 😄";
+    const questions = [
+      introQuestion,
+      "Are you the Queen of your family? 👑😂",
+      "Is Nandhu your favorite person? 🤭💖",
+      "Do you know your son loves you more than anything in the world? 😜",
+      "Promise yourself you will make Paayasam whenever your son asks? 🍮😆",
+      "Are you ready to receive unlimited love now? 🤗💕"
+    ];
+
+    let currentQuestion = 0;
+    const content = document.getElementById("content");
+
+    function loadQuestion() {
+      const text = questions[currentQuestion];
+      content.innerHTML = `<div class="question">${text}</div><button class='yes'>Yes</button><button class='no'>No</button>`;
+
+      const yesBtn = content.querySelector('.yes');
+      const noBtn = content.querySelector('.no');
+
+      yesBtn.addEventListener('click', answerYes);
+      yesBtn.addEventListener('touchstart', answerYes);
+      noBtn.addEventListener('click', answerNo);
+      noBtn.addEventListener('touchstart', answerNo);
+    }
+
+    function answerYes() {
+      currentQuestion++;
+      if(currentQuestion < questions.length) loadQuestion();
+      else showFinalMessage();
+    }
+
+    function answerNo() {
+      loadQuestion();
+    }
+
+    function showFinalMessage() {
+      content.innerHTML = `<div class="final-message">🎉🎂 My Dear Mummy!! 🎂🎉<br><br>
+      Vaalththa Vayathillai, Vanangugiren 😆👑<br><br>
+      Thank you for your love, thittugal, food, advice, and ooma kuthugal 💖<br>
+      You are not just my mom… you are my first and forever best friend 🥰<br><br>
+      Yenna aanalum naan iruppen — thoorama irundhaalum kitaye iruppen 💕🌸<br><br>
+      Yours lovingly,<br>Nandhu 💖<br><br>Love you ammovvv 💕</div>`;
+      startConfetti();
+    }
+
+    function startConfetti() {
+      const colors = ['#ff4d6d','#ffd166','#06d6a0','#118ab2','#9b5de5'];
+      for(let i=0;i<120;i++){
+        const confetti = document.createElement('div');
+        confetti.className='confetti';
+        confetti.style.left=Math.random()*100+'vw';
+        confetti.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+        confetti.style.animationDuration=(2+Math.random()*3)+'s';
+        document.body.appendChild(confetti);
+        setTimeout(()=>confetti.remove(),5000);
+      }
+    }
+
+    loadQuestion();
+  });
+  </script>
+</body>
+</html>
