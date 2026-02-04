@@ -1,205 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Special Birthday Surprise 🎂</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Special Birthday Surprise 🎂</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffdee9, #b5fffc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
 
-<style>
-body {
-  margin: 0;
-  font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #ffdee9, #b5fffc);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  text-align: center;
-  overflow-x: hidden;
-}
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      max-width: 95%;
+      width: 400px;
+      animation: pop 0.6s ease;
+    }
 
-.card {
-  background: #fff;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  max-width: 95%;
-  width: 400px;
-}
+    .question {
+      font-size: 20px;
+      margin: 15px 0;
+    }
 
-.cartoon {
-  font-size: 40px;
-  margin-bottom: 10px;
-}
+    button {
+      font-size: 18px;
+      padding: 10px 20px;
+      margin: 8px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.question {
-  font-size: 20px;
-  margin: 15px 0;
-}
+    button:hover { transform: scale(1.05); }
+    .yes { background: #4caf50; color: white; }
+    .no { background: #ff5252; color: white; }
 
-button {
-  font-size: 18px;
-  padding: 10px 20px;
-  margin: 8px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: transform 0.2s;
-  -webkit-tap-highlight-color: transparent;
-}
+    .cartoon { font-size: 40px; margin-bottom: 10px; }
 
-button:hover { transform: scale(1.05); }
+    .final-message {
+      position: relative;
+      padding: 20px;
+      border-radius: 15px;
+      color: violet;
+      font-size: 20px;
+      overflow: hidden;
+      z-index: 1;
+    }
 
-.yes { background: #4caf50; color: white; }
-.no  { background: #ff5252; color: white; }
+    .final-message::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url('https://raw.githubusercontent.com/ManibharathiK95/birthday-surprise/main/IMG_4472.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.8;
+      z-index: -2;
+    }
 
-/* FINAL MESSAGE WITH BACKGROUND */
-.final-message {
-  position: relative;
-  padding: 22px;
-  border-radius: 15px;
-  color: violet;
-  font-size: 20px;
-  overflow: hidden;
-  z-index: 1;
-}
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      animation: confetti-blast linear forwards;
+    }
 
-.final-message::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url('https://github.com/ManibharathiK95/birthday-surprise/blob/main/IMG_4472.jpg');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.8;
-  z-index: -2;
-}
-
-/* soft white overlay for readability */
-.final-message::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.6);
-  z-index: -1;
-}
-
-/* CONFETTI */
-.confetti {
-  position: fixed;
-  width: 10px;
-  height: 10px;
-  bottom: -20px;
-  left: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  animation: confetti-blast ease-out forwards;
-}
-
-@keyframes confetti-blast {
-  0% {
-    transform: translate(0,0) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(var(--x), var(--y)) rotate(720deg);
-    opacity: 0;
-  }
-}
-</style>
+    @keyframes confetti-blast {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+      100% { transform: translate(var(--x), var(--y)) rotate(720deg); opacity: 0; }
+    }
+  </style>
 </head>
-
 <body>
-<div class="card">
-  <div class="cartoon">🎉🎈🎂</div>
-  <div id="content"></div>
-</div>
+  <div class="card">
+    <div class="cartoon">🎉🎈🎂</div>
+    <div id="content"></div>
+  </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
 
-  const introQuestion =
-    "வணக்கம் திருமதி உதயராணி 👑💖<br>உங்கள் பிறந்தநாள் பரிசைப் பெற வருக 🎂🎉<br><br>Are you ready? 😄";
+    const introQuestion = "வணக்கம் திருமதி உதயராணி 👑💖<br>உங்கள் பிறந்தநாள் பரிசைப் பெற வருக 🎂🎉<br><br>Are you ready? 😄";
+    const questions = [
+      introQuestion,
+      "நீங்க தான் உங்க குடும்பத்திற்கு ராணி என்று தெரியுமா?👑😂",
+      "நந்து உங்களுக்குப் பிடித்த நபரா? 🤭💖",
+      "இந்த உலகத்திலேயே உங்க மகனுக்கு உங்களதான் ரொம்ப புடிக்கும்னு உங்களுக்கு தெரியுமா?? 😜",
+      "உங்க மகன் எப்போ கேட்டாலும் நீங்க பாயாசம் செஞ்சு தருவீங்களா? 🍮😆",
+      "இப்பொழுது அளவற்ற அன்பை பெற நீங்கள் தயாரா? 🤗💕"
+    ];
 
-  const questions = [
-    introQuestion,
-    "நீங்க தான் உங்க குடும்பத்திற்கு ராணி என்று தெரியுமா?👑😂",
-    "நந்து உங்களுக்குப் பிடித்த நபரா? 🤭💖",
-    "இந்த உலகத்திலேயே உங்க மகனுக்கு உங்களதான் ரொம்ப புடிக்கும்னு உங்களுக்கு தெரியுமா?? 😜",
-    "உங்க மகன் எப்போ கேட்டாலும் நீங்க பாயாசம் செஞ்சு தருவீங்களா? 🍮😆",
-    "இப்பொழுது அளவற்ற அன்பை பெற நீங்கள் தயாரா? 🤗💕"
-  ];
+    let currentQuestion = 0;
+    const content = document.getElementById("content");
 
-  let currentQuestion = 0;
-  const content = document.getElementById("content");
+    function loadQuestion() {
+      content.innerHTML = `
+        <div class="question">${questions[currentQuestion]}</div>
+        <button class='yes'>Yes</button>
+        <button class='no'>No – inthu work aagathu 😜</button>
+      `;
 
-  function loadQuestion() {
-  content.innerHTML = `
-    <div class="question">${questions[currentQuestion]}</div>
-    <button class="yes">Yes</button>
-    <button class="no">No – Ithu work aagathu 😜</button>
-  `;
+      const yesBtn = content.querySelector('.yes');
+      const noBtn = content.querySelector('.no');
 
-  const yesBtn = content.querySelector('.yes');
-  const noBtn = content.querySelector('.no');
+      yesBtn.onclick = answerYes;
+      noBtn.onclick = loadQuestion; // NO just reloads same question
+    }
 
-  yesBtn.onclick = answerYes;
-  noBtn.onclick = loadQuestion;
-}
+    function answerYes() {
+      currentQuestion++;
+      if(currentQuestion < questions.length) loadQuestion();
+      else showFinalMessage();
+    }
 
-  function answerYes() {
-    currentQuestion++;
-    if (currentQuestion < questions.length) loadQuestion();
-    else showFinalMessage();
-  }
+    function showFinalMessage() {
+      content.innerHTML = `<div class="final-message">🎉🎂 My Dear Mummy!! 🎂🎉<br><br>
+      Vaalththa Vayathillai, Vanangugiren 😆👑<br><br>
+      Thank you for your love, thittugal, food, advice, and ooma kuththugal 💖<br>
+      You are not just my mom… you are my first and forever best friend 🥰<br><br>
+      Yenna aanalum naan iruppen — thoorama irundhaalum kitaye iruppen 💕🌸<br><br>
+      Yours lovingly,<br>Nandhu 💖<br><br>Love you my ammovvv 💕</div>`;
+      startConfetti();
+    }
 
-  function showFinalMessage() {
-    content.innerHTML = `
-      <div class="final-message">
-        🎉🎂 My Dear Mummy!! 🎂🎉<br><br>
-        Vaalththa Vayathillai, Vanangugiren 😆👑<br><br>
-        Thank you for your love, thittugal, food, advice, and ooma kuththugal 💖<br>
-        You are not just my mom… you are my first and forever best friend 🥰<br><br>
-        Yenna aanalum naan iruppen — thoorama irundhaalum kitaye iruppen 💕🌸<br><br>
-        Yours lovingly,<br>
-        Nandhu 💖<br><br>
-        Love you my ammovvv 💕
-      </div>
-    `;
-    startConfetti();
-  }
+    function startConfetti() {
+      const colors = ['#ff4d6d','#ffd166','#06d6a0','#118ab2','#9b5de5'];
 
-function startConfetti() {
-  const colors = ['#ff4d6d','#ffd166','#06d6a0','#118ab2','#9b5de5'];
+      for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 
-  for (let i = 0; i < 150; i++) {
-    const c = document.createElement('div');
-    c.className = 'confetti';
-    c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        // Randomly left or right bottom
+        const side = Math.random() < 0.5 ? 'left' : 'right';
+        confetti.style.bottom = '0px';
+        confetti.style[side] = Math.random() * 50 + 'px';
 
-    // Randomly choose left or right bottom
-    const side = Math.random() < 0.5 ? 'left' : 'right';
-    c.style[side] = Math.random() * 20 + '%'; // small random offset from edge
-    c.style.bottom = '-20px';
+        // Random movement
+        const xMovement = (side === 'left' ? 1 : -1) * (100 + Math.random() * 200);
+        const yMovement = -(200 + Math.random() * 200);
 
-    // Random horizontal and vertical movement
-    const xMovement = (side === 'left' ? 1 : -1) * (100 + Math.random() * 200);
-    const yMovement = -(150 + Math.random() * 200);
+        confetti.style.setProperty('--x', xMovement + 'px');
+        confetti.style.setProperty('--y', yMovement + 'px');
 
-    c.style.setProperty('--x', `${xMovement}px`);
-    c.style.setProperty('--y', `${yMovement}px`);
+        confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
 
-    // Random animation duration
-    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+        document.body.appendChild(confetti);
 
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), 4500);
-  }
-}
+        setTimeout(() => confetti.remove(), 4500);
+      }
+    }
 
-  loadQuestion();
-});
-</script>
+    loadQuestion();
+  });
+  </script>
 </body>
 </html>
-
