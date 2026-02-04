@@ -58,7 +58,7 @@ button:hover { transform: scale(1.05); }
   position: relative;
   padding: 22px;
   border-radius: 15px;
-  color: "violet";
+  color: violet;
   font-size: 20px;
   overflow: hidden;
   z-index: 1;
@@ -169,34 +169,37 @@ document.addEventListener('DOMContentLoaded', function () {
     startConfetti();
   }
 
-  function startConfetti() {
-    const colors = ['#ff4d6d','#ffd166','#06d6a0','#118ab2','#9b5de5'];
+function startConfetti() {
+  const colors = ['#ff4d6d','#ffd166','#06d6a0','#118ab2','#9b5de5'];
 
-    for (let i = 0; i < 150; i++) {
-      const c = document.createElement('div');
-      c.className = 'confetti';
-      c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+  for (let i = 0; i < 150; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 
-      const angle = Math.random() * Math.PI - Math.PI / 2;
-      const distance = 150 + Math.random() * 300;
+    // Randomly choose left or right bottom
+    const side = Math.random() < 0.5 ? 'left' : 'right';
+    c.style[side] = Math.random() * 20 + '%'; // small random offset from edge
+    c.style.bottom = '-20px';
 
-      c.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
-      c.style.setProperty('--y', `${-Math.sin(angle) * distance - 200}px`);
-      c.style.animationDuration = (2 + Math.random() * 2) + 's';
+    // Random horizontal and vertical movement
+    const xMovement = (side === 'left' ? 1 : -1) * (100 + Math.random() * 200);
+    const yMovement = -(150 + Math.random() * 200);
 
-      document.body.appendChild(c);
-      setTimeout(() => c.remove(), 4500);
-    }
+    c.style.setProperty('--x', `${xMovement}px`);
+    c.style.setProperty('--y', `${yMovement}px`);
+
+    // Random animation duration
+    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
   }
+}
 
   loadQuestion();
 });
 </script>
 </body>
 </html>
-
-
-
-
-
 
