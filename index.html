@@ -134,15 +134,18 @@ document.addEventListener('DOMContentLoaded', function () {
   const content = document.getElementById("content");
 
   function loadQuestion() {
-    content.innerHTML = `
-      <div class="question">${questions[currentQuestion]}</div>
-      <button class="yes">Yes</button>
-      <button class="no">No – inthu work aagathu 😜</button>
-    `;
+  content.innerHTML = `
+    <div class="question">${questions[currentQuestion]}</div>
+    <button class="yes">Yes</button>
+    <button class="no">No – Ithu work aagathu 😜</button>
+  `;
 
-    content.querySelector('.yes').onclick = answerYes;
-    content.querySelector('.no').onclick = loadQuestion;
-  }
+  const yesBtn = content.querySelector('.yes');
+  const noBtn = content.querySelector('.no');
+
+  yesBtn.onclick = answerYes;
+  noBtn.onclick = loadQuestion;
+}
 
   function answerYes() {
     currentQuestion++;
@@ -191,4 +194,5 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 </body>
 </html>
+
 
